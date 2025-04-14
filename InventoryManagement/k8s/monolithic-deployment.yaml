@@ -1,0 +1,79 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inventory-management
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: inventory-management
+  template:
+    metadata:
+      labels:
+        app: inventory-management
+    spec:
+      containers:
+        - name: inventory-management
+          image: ismailnijazi/inventory_management_monolithic:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: "Production"
+            - name: ASPNETCORE_URLS
+              value: "http://+:80"
+            - name: DefaultConnection
+              valueFrom:
+                secretKeyRef:
+                  name: inventory-db-secrets
+                  key: connection-string
+          resources:
+            requests:
+              cpu: "600m"
+              memory: "1000Mi"
+            limits:
+              cpu: "800m"
+              memory: "1300Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-management-clusterip
+spec:
+  selector:
+    app: inventory-management
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: inventory-management-loadbalancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: inventory-management
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: inventory-management-hp
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: inventory-management
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 60

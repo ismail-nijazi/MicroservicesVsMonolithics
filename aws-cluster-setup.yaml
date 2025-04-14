@@ -1,0 +1,37 @@
+apiVersion: eksctl.io/v1alpha5
+kind: ClusterConfig
+
+metadata:
+  name: eks-thesis-cluster-v1
+  region: eu-north-1
+  version: "1.32"
+
+vpc:
+  subnets:
+    public:
+      eu-north-1a:
+        id: subnet-0f92bf3d1592b827e
+      eu-north-1b:
+        id: subnet-0321792ff147f408b
+      eu-north-1c:
+        id: subnet-0d713ffea4332a283
+
+cloudWatch:
+  clusterLogging:
+    enableTypes:
+      ["api", "audit", "authenticator", "controllerManager", "scheduler"]
+
+managedNodeGroups:
+  - name: ng-thesis
+    instanceType: t3.medium
+    desiredCapacity: 1
+    minSize: 1
+    maxSize: 3
+    volumeSize: 30
+    enableDetailedMonitoring: true
+    labels:
+      role: worker
+    tags:
+      NodeGroup: thesis-ng
+    ssh:
+      allow: false
