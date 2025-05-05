@@ -44,14 +44,17 @@ The deployment leverages AWS EKS with the following configurations:
 
 > **Note:** The deployment YAMLs reference publicly accessible container images hosted in the author's container registry. Users may optionally build their own images, push them to a registry of their choice (e.g., Docker Hub, ECR), and update the image fields in the manifests accordingly.
 
-## Monitoring & Analysis
+## 📊 Monitoring & Analysis
 
 Custom Python scripts are provided to monitor and analyze system performance:
 
-* `monitor_CPU_Memory.py`: Tracks CPU and memory usage.
-* `monitor_network_bandwidth.py`: Measures network bandwidth consumption.
+* `monitor_CPU_Memory.py`: Uses `kubectl top node` and `kubectl get hpa` commands to periodically collect CPU and memory usage for each node, as well as HPA (Horizontal Pod Autoscaler) status. The collected metrics are logged into CSV files (`node_resource_usage.csv` and `hpa_status.csv`) for further analysis.
+
+* `monitor_network_bandwidth.py`: Retrieves the total network bandwidth (incoming and outgoing) of EKS nodes using AWS CloudWatch metrics (`NetworkIn` and `NetworkOut`) for EC2 instances in the specified node group. Data is collected for READY nodes only and logged in `nodegroup_network_bandwidth.csv`.
 
 These tools facilitate the comparison of performance metrics between the two architectural styles under different load scenarios.
+
+> **Note:** Both scripts depend on system command outputs (`kubectl`, `aws cli`) and assume a compatible AWS EKS and EC2 setup. While they functioned correctly during the time of this study, future users should validate their correctness in newer environments, as command output formats or APIs may change over time.
 
 ## Repository Structure
 
