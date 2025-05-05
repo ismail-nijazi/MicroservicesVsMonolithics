@@ -4,8 +4,8 @@ This repository contains the source code and infrastructure configurations used 
 
 **Title:** *Evaluating Performance and Resilience in Microservices and Monolithic Architectures*
 **Author:** Ismail Nijazi
-**Institution:** \Blekinge Institute of Technology
-**Date:** \Maj 2025
+**Institution:** Blekinge Institute of Technology
+**Date:** Maj 2025
 
 ## Overview
 
