@@ -7,7 +7,7 @@ This repository contains the source code and infrastructure configurations used 
 **Institution:** \Blekinge Institute of Technology
 **Date:** \Maj 2025
 
-## 📘 Overview
+## Overview
 
 The project implements an Inventory Management System in both monolithic and microservices architectures using .NET Core. The applications are deployed on Amazon Elastic Kubernetes Service (EKS) to evaluate:
 
@@ -15,7 +15,7 @@ The project implements an Inventory Management System in both monolithic and mic
 * **Resource utilization (CPU, memory, network)**
 * **Fault tolerance and resilience mechanisms**
 
-## 🧱 Architecture
+## Architecture
 
 ### Monolithic Version
 
@@ -28,7 +28,7 @@ The project implements an Inventory Management System in both monolithic and mic
 * Services communicate via HTTP REST APIs.
 * Each service is containerized and deployed independently.
 
-## 🚀 Deployment
+## Deployment
 
 The deployment leverages AWS EKS with the following configurations:
 
@@ -44,7 +44,7 @@ The deployment leverages AWS EKS with the following configurations:
 
 > **Note:** The deployment YAMLs reference publicly accessible container images hosted in the author's container registry. Users may optionally build their own images, push them to a registry of their choice (e.g., Docker Hub, ECR), and update the image fields in the manifests accordingly.
 
-## 📊 Monitoring & Analysis
+## Monitoring & Analysis
 
 Custom Python scripts are provided to monitor and analyze system performance:
 
@@ -53,7 +53,7 @@ Custom Python scripts are provided to monitor and analyze system performance:
 
 These tools facilitate the comparison of performance metrics between the two architectural styles under different load scenarios.
 
-## 📁 Repository Structure
+## Repository Structure
 
 ```
 MicroservicesVsMonolithics/
@@ -68,6 +68,6 @@ MicroservicesVsMonolithics/
 └── README.md                      # Project documentation
 ```
 
-## 📜 License
+## License
 
 This project is licensed under the MIT License. See the [LICENSE](https://github.com/ismail-nijazi/MicroservicesVsMonolithics/blob/main/LICENSE) file for details.
